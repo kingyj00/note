@@ -1,6 +1,7 @@
 package com.ll;
 
 import java.util.Scanner;
+// 개인 참조 : 22강(완)
 // 참고 : 명언게시판 4단계 / 21강
 // 단계 : 등록/종료 입력값, 이름/번호 등록, 등록시 알림.
 public class Main {
@@ -12,12 +13,15 @@ public class Main {
 
 class 전화번호 {
     public void run() {
+
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("■■■■■■[ 번호 목록 ]■■■■■■");
         System.out.println("번호 등록을 원하면 [등록]");
         System.out.println("종료를 원하면 [종료]");
         System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■");
 
+        int lastId = 0;
 
         while (true) {
             System.out.print("입력 : ");
@@ -31,10 +35,20 @@ class 전화번호 {
                 System.out.print("전화번호 : ");
                 String number = scanner.nextLine();
                 System.out.println("전화번호가 등록되었습니다.");
+                int id = ++lastId;
 
+                NumberBook numberbook = new NumberBook();
+                numberbook.id = id;
+                numberbook.name = name;
+                numberbook.number = number;
             }
         }
         scanner.close();
     }
 }
 
+class NumberBook {
+    int id;
+    String name;
+    String number;
+}
