@@ -1,9 +1,19 @@
 package com.ll;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        String 정보 = "이름 : %s, 나이 : %d, 번호 : %d".formatted("Simpson", 20, 1);
-        System.out.println("HELLO");
-        System.out.println(정보);;
+        전화번호 app = new 전화번호();
+        app.run ();
+    }
+}
+
+class 전화번호 {
+    public void run(){
+        System.out.println("번호 목록");
+        System.out.println("명령 : ");
+
+        Scanner scanner = new Scanner(System.in);
     }
 }
