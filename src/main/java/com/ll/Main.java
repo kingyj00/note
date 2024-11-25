@@ -1,27 +1,17 @@
 package com.ll;
 
-import java.util.Scanner;
+import java.util.stream.IntStream;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
-        전화번호 app = new 전화번호();
-        app.run ();
-    }
-}
-
-class 전화번호 {
-    public void run(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("번호 목록");
-
-        while (true) {
-            System.out.println("명령 : ");
-            String cmd = scanner.nextLine();
-
-            if (cmd.equals("종료")) break;
-
-            System.out.println("입력값 : " + cmd);
+        // 일반
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 == 0) continue;
+            System.out.println(i);
         }
-        scanner.close();
+
+        IntStream.rangeClosed(1, 10) // 1부터 10까지의 숫자 생성
+                .filter(i -> i % 2 != 0) // 홀수만 필터링 (짝수 제거)
+                .forEach(System.out::println); // 필터링된 숫자를 출력
     }
 }
