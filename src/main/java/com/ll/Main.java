@@ -1,7 +1,8 @@
 package com.ll;
 
 import java.util.Scanner;
-
+// 참고 : 명언게시판 4단계 / 21강
+// 단계 : 등록/종료 입력값, 이름/번호 등록, 등록시 알림.
 public class Main {
     public static void main(String[] args) {
         전화번호 app = new 전화번호();
@@ -29,6 +30,7 @@ class 전화번호 {
                 String name = scanner.nextLine();
                 System.out.print("전화번호 : ");
                 String number = scanner.nextLine();
+                System.out.println("전화번호가 등록되었습니다.");
 
             }
         }
