@@ -1,17 +1,20 @@
 package com.ll;
 
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
-class Main {
+public class Main {
     public static void main(String[] args) {
-        // 일반
-        for (int i = 1; i <= 10; i++) {
-            if (i % 2 == 0) continue;
-            System.out.println(i);
-        }
+        // 문자열 배열
+        String[] input = {"1번", "2번", "3번"};
 
-        IntStream.rangeClosed(1, 10) // 1부터 10까지의 숫자 생성
-                .filter(i -> i % 2 != 0) // 홀수만 필터링 (짝수 제거)
-                .forEach(System.out::println); // 필터링된 숫자를 출력
+        // 짝수 제거하고 정수 배열로 변환
+        int[] result = Arrays.stream(input) // 문자열 배열을 스트림으로 변환
+                .map(s -> Integer.parseInt(s.replaceAll("[^0-9]", ""))) // 숫자만 추출
+                .filter(num -> num % 2 != 0) // 짝수 제거
+                .mapToInt(num -> num) // int 스트림으로 변환
+                .toArray(); // 결과를 int 배열로 변환
+
+        // 결과 출력
+        System.out.println(Arrays.toString(result));
     }
 }
