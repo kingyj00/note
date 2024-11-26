@@ -7,23 +7,23 @@ import java.util.Scanner;
 public class 전화번호 {
     private final Scanner scanner;
     private int lastId;
-    private final List<NumberBook> numberbooks;
+    private final List<NumberBook> numberBooks;
 // error solve : 왜 []이딴걸 처넣고 처넣은지도 몰랐을까...
 
     public 전화번호() {
         scanner = new Scanner(System.in);
         lastId = 0;
-        numberbooks = new ArrayList<>();
+        numberBooks = new ArrayList<>();
     }
 
     public void run() {
-        System.out.println("■■■■■■[ 번호 목록 ]■■■■■■");
+        System.out.println("■■■■■■■[ 가이드 ]■■■■■■■");
         System.out.println("번호 등록을 원하면 [등록]");
         System.out.println("등록된 번호 목록 보려면 [목록]");
         System.out.println("종료를 원하면 [종료]");
         System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■");
 
-        addNumberBook("홍길동", "010-0000-0000");
+        makeSampleData();
 
         while (true) {
             System.out.print("입력 : ");
@@ -39,12 +39,16 @@ public class 전화번호 {
         scanner.close();
     }
 
+    private void makeSampleData() {
+        addNumberBook("홍길동", "010-0000-0000");
+    }
+
     private NumberBook addNumberBook(String name, String number) {
         int id = ++lastId;
 
         NumberBook numberbook = new NumberBook(id, name, number);
 
-        numberbooks.add(numberbook);
+        numberBooks.add(numberbook);
 
         return numberbook;
     }
@@ -60,11 +64,13 @@ public class 전화번호 {
     }
 
     private void actionList() {
+        System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■");
+        System.out.println("       번호 목록     ");
         System.out.println("번호 / 이름 / 전화번호 ");
-        System.out.println("========================");
+        System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■");
 
-        for (NumberBook numberBook : numberbooks) {
-            System.out.println("%d / %s / %s".formatted(numberBook.getId(), numberBook.getname(), numberBook.getnumber()));
+        for (NumberBook numberBook : numberBooks.reversed()){
+            System.out.println("%d / %s / %s".formatted(numberBook.getId(), numberBook.getname(),numberBook.getnumber()));
         }
     }
 }
