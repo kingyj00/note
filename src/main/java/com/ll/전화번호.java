@@ -2,10 +2,10 @@ package com.ll;
 
 import java.util.Scanner;
 
-class 전화번호 {
-    private Scanner scanner;
+public class 전화번호 {
+    private final Scanner scanner;
     private int lastId;
-    private NumberBook[] numberbooks;
+    private final NumberBook[] numberbooks;
     private int size;
 
     public 전화번호() {
@@ -57,7 +57,7 @@ class 전화번호 {
         String number = scanner.nextLine();
         NumberBook numberbook = add(name, number);
 
-        System.out.println("%d번에 전화번호가 등록되었습니다.".formatted(numberbook.id));
+        System.out.println("%d번에 전화번호가 등록되었습니다.".formatted(numberbook.getId()));
     }
 
     private void actionList() {
@@ -66,7 +66,7 @@ class 전화번호 {
 
         for (NumberBook numberBook : numberbooks) {
             if (numberBook == null) break;
-            System.out.println("%d / %s / %s".formatted(numberBook.id, numberBook.name, numberBook.number));
+            System.out.println("%d / %s / %s".formatted(numberBook.getId(), numberBook.getname(), numberBook.getnumber()));
         }
     }
 }
