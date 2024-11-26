@@ -1,18 +1,19 @@
 package com.ll;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class 전화번호 {
     private final Scanner scanner;
     private int lastId;
-    private final NumberBook[] numberbooks;
-    private int size;
+    private final List<NumberBook>[] numberbooks;
+
 
     public 전화번호() {
         scanner = new Scanner(System.in);
         lastId = 0;
-        numberbooks = new NumberBook[100];
-        size = 0;
+        numberbooks = new ArrayList<>();
     }
 
     public void run() {
@@ -22,14 +23,13 @@ public class 전화번호 {
         System.out.println("종료를 원하면 [종료]");
         System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■");
 
-        add("홍길동", "010-0000-0000");
+        addNumberBook("홍길동", "010-0000-0000");
 
         while (true) {
             System.out.print("입력 : ");
-            String cmd = scanner.nextLine();
+            final String cmd = scanner.nextLine();
 
-            if (cmd.equals("종료")) {
-                break;
+            if (cmd.equals("종료")) { break;
             } else if (cmd.equals("등록")) {
                 actionAdd();
             } else if (cmd.equals("목록")) {
@@ -39,13 +39,12 @@ public class 전화번호 {
         scanner.close();
     }
 
-    private NumberBook add(String name, String number) {
+    private NumberBook addNumberBook(String name, String number) {
         int id = ++lastId;
 
         NumberBook numberbook = new NumberBook(id, name, number);
 
-        numberbooks[size] = numberbook;
-        size++;
+        numberbooks.add(numberbook);
 
         return numberbook;
     }
@@ -55,7 +54,7 @@ public class 전화번호 {
         String name = scanner.nextLine();
         System.out.print("전화번호 : ");
         String number = scanner.nextLine();
-        NumberBook numberbook = add(name, number);
+        NumberBook numberbook = addNumberBook(name, number);
 
         System.out.println("%d번에 전화번호가 등록되었습니다.".formatted(numberbook.getId()));
     }
@@ -65,7 +64,6 @@ public class 전화번호 {
         System.out.println("========================");
 
         for (NumberBook numberBook : numberbooks) {
-            if (numberBook == null) break;
             System.out.println("%d / %s / %s".formatted(numberBook.getId(), numberBook.getname(), numberBook.getnumber()));
         }
     }
