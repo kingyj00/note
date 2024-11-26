@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class 전화번호 {
     private final Scanner scanner;
     private int lastId;
-    private final List<NumberBook>[] numberbooks;
-
+    private final List<NumberBook> numberbooks;
+// error solve : 왜 []이딴걸 처넣고 처넣은지도 몰랐을까...
 
     public 전화번호() {
         scanner = new Scanner(System.in);
