@@ -84,5 +84,6 @@ public class 전화번호 {
         boolean removed = numberBooks.removeIf(numberBook -> numberBook.getId() == id);
 
         if (removed) System.out.println("%d번에 전화번호가 삭제되었습니다.".formatted(id));
+        else System.out.println("%d번에 전화번호가 없습니다.".formatted(id));;
     }
 }
