@@ -34,6 +34,10 @@ public class 전화번호 {
                 actionAdd();
             } else if (cmd.equals("목록")) {
                 actionList();
+            } else if (cmd.startsWith("삭제")){
+                String idStr = cmd.substring(6);
+                int id = Integer.parseInt(idStr);
+                actionDelete(id);
             }
         }
         scanner.close();
@@ -53,6 +57,7 @@ public class 전화번호 {
         return numberbook;
     }
 
+    // ★ 액션 코드
     private void actionAdd() {
         System.out.print("이름 : ");
         String name = scanner.nextLine();
@@ -72,5 +77,12 @@ public class 전화번호 {
         for (NumberBook numberBook : numberBooks.reversed()){
             System.out.println("%d / %s / %s".formatted(numberBook.getId(), numberBook.getname(),numberBook.getnumber()));
         }
+
+    }
+
+    private void actionDelete(int id) {
+        boolean removed = numberBooks.removeIf(numberBook -> numberBook.getId() == id);
+
+        if (removed) System.out.println("%d번에 전화번호가 삭제되었습니다.".formatted(id));
     }
 }
