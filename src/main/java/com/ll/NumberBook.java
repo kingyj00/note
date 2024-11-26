@@ -21,6 +21,14 @@ public class NumberBook {
         return id;
     }
 
+    public void setname(String name){
+        this.name = name;
+    }
+
+    public void setnumber(String number){
+        this.number = number;
+    }
+
     @Override
     public String toString() {
         return "NumberBook (id=%d, name=\"%s\", number=\"%s\")".formatted(id, name, number);

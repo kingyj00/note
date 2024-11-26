@@ -34,10 +34,14 @@ public class 전화번호 {
                 actionAdd();
             } else if (cmd.equals("목록")) {
                 actionList();
-            } else if (cmd.startsWith("삭제")){
+            } else if (cmd.startsWith("삭제")) {
                 String idStr = cmd.substring(6);
                 int id = Integer.parseInt(idStr);
                 actionDelete(id);
+            } else if (cmd.startsWith("수정")){
+                    String idStr = cmd.substring(6);
+                    int id = Integer.parseInt(idStr);
+                    actionModify(id);
             }
         }
         scanner.close();
@@ -85,5 +89,32 @@ public class 전화번호 {
 
         if (removed) System.out.println("%d번에 전화번호가 삭제되었습니다.".formatted(id));
         else System.out.println("%d번에 전화번호가 없습니다.".formatted(id));;
+
+    }
+    private void actionModify(int id) {
+        NumberBook found = null;
+
+        for (NumberBook numberBook : numberBooks){
+            if (numberBook.getId() == id){
+                found = numberBook;
+                break;
+            }
+        }
+        if ( found == null){
+            System.out.println("%d번에 전화번호가 없습니다.".formatted(id));
+            return;
+        }
+
+        System.out.println("이름(기존등록) : %s ".formatted(found.getname()));
+        System.out.print("이름 : ");
+        String name = scanner.nextLine();
+
+        System.out.println("전화번호(기존등록) : %s ".formatted(found.getnumber()));
+        System.out.print("전화번호 : ");
+        String number = scanner.nextLine();
+
+        found.setname(name);
+        found.setnumber(number);
+        System.out.println("%d번에 전화번호가 수정되었습니다.".formatted(id));
     }
 }
