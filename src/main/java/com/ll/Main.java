@@ -2,6 +2,7 @@ package com.ll;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 class Main {
     public static void main(String[] args) {
@@ -10,7 +11,7 @@ class Main {
         people.add(new Person(2, "Bob", 25, 'M'));
         people.add(new Person(3, "David", 35, 'M'));
 
-        // 문제 : 남성들의 나이의 평균
+        // 문제 : 남성의 이름들
 
         System.out.println("== No Stream ==");
         noStreamVersion(people);
@@ -20,30 +21,26 @@ class Main {
     }
 
     private static void noStreamVersion(List<Person> people) {
-        int sum = 0;
-        int itemsOfMan = 0;
+        List<String> names = new ArrayList<>();
 
         for (Person person : people) {
             if (person.getGender() == 'M') {
-                sum += person.getAge();
-                itemsOfMan++;
+                names.add(person.getName());
             }
         }
 
-        double avg = (double) sum / itemsOfMan;
+        String manNames = String.join(", ", names);
 
-        System.out.println("avg of age : " + avg);
+        System.out.println("manNames : " + manNames);
     }
 
     private static void streamVersion(List<Person> people) {
-        double avg = people
-                .stream()
-                .filter(e -> e.getGender() == 'M')
-                .mapToInt(e -> e.getAge())
-                .average()
-                .orElse(0);
+        String manNames = people.stream()
+                .filter(person -> person.getGender() == 'M')
+                .map(Person::getName)
+                .collect(Collectors.joining(", "));
 
-        System.out.println("avg of age : " + avg);
+        System.out.println("manNames : " + manNames);
     }
 }
 
