@@ -1,46 +1,51 @@
-package com.ll;
-
 import java.util.Arrays;
 
 class Main {
     public static void main(String[] args) {
         System.out.println("== No Stream ==");
-
         noStreamVersion();
 
-        System.out.println("== Stream ==");
+        System.out.println("== Stream v1 ==");
+        streamVersionV1();
 
-        streamVersion();
+        System.out.println("== Stream v2 ==");
+        streamVersionV2();
     }
 
     private static void noStreamVersion() {
-        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int[] numbers = new int[]{1, 2, 3};
 
-        System.out.println("= 원본 numbers(변형 전) =");
-        System.out.println(Arrays.toString(numbers));
+        String[] messages = new String[numbers.length];
 
         for (int i = 0; i < numbers.length; i++) {
-            numbers[i] *= 2;
+            if (numbers[i] % 2 == 0) continue;
+
+            messages[i] = numbers[i] + "번";
         }
 
-        System.out.println("= 원본 numbers(변형 후) =");
+        System.out.println("= 원본 =");
         System.out.println(Arrays.toString(numbers));
+        System.out.println("= 결과 =");
+        System.out.println(Arrays.toString(messages));
     }
 
-    private static void streamVersion() {
-        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
-        System.out.println("= 원본 numbers(스트림 전) =");
-        System.out.println(Arrays.toString(numbers));
-
-        int[] calculatedNumbers = Arrays.stream(numbers)
-                .map(e -> e * 2)
+    private static void streamVersionV1() {
+        Object[] array = Arrays.stream(new int[]{1, 2, 3})
+                .filter(e -> e % 2 != 0)
+                .mapToObj(e -> e + "번")
                 .toArray();
 
-        System.out.println("= 원본 numbers(스트림 후) =");
-        System.out.println(Arrays.toString(numbers));
+        System.out.println("= 결과 =");
+        System.out.println(Arrays.toString(array));
+    }
 
-        System.out.println("= 새 배열 calculatedNumbers =");
-        System.out.println(Arrays.toString(calculatedNumbers));
+    private static void streamVersionV2() {
+        String[] array = Arrays.stream(new int[]{1, 2, 3})
+                .filter(e -> e % 2 != 0)
+                .mapToObj(e -> e + "번")
+                .toArray(String[]::new);
+
+        System.out.println("= 결과 =");
+        System.out.println(Arrays.toString(array));
     }
 }
