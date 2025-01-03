@@ -1,7 +1,26 @@
 package com.ll;
 
-public class Main {
+import java.util.stream.IntStream;
+
+class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World?");
+        // 일반
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(i);
+        }
+
+        // 스트림
+        IntStream.rangeClosed(1, 10)
+                .forEach(e -> {
+                    System.out.println(e);
+                });
+
+        // 스트림
+        IntStream.rangeClosed(1, 10)
+                .forEach(e -> System.out.println(e));
+
+        // 스트림
+        IntStream.rangeClosed(1, 10)
+                .forEach(System.out::println);
     }
 }
