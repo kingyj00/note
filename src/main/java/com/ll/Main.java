@@ -2,7 +2,7 @@ package com.ll;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 class Main {
     public static void main(String[] args) {
@@ -21,26 +21,36 @@ class Main {
     }
 
     private static void noStreamVersion(List<Person> people) {
-        List<String> names = new ArrayList<>();
+        Person found = null;
 
         for (Person person : people) {
-            if (person.getGender() == 'M') {
-                names.add(person.getName());
+            if (person.getId() == 2) {
+                found = person;
+                break;
             }
         }
 
-        String manNames = String.join(", ", names);
+        if (found == null) {
+            System.out.println("not found");
+            return;
+        }
 
-        System.out.println("manNames : " + manNames);
+        System.out.println("found : " + found.getName());
     }
 
     private static void streamVersion(List<Person> people) {
-        String manNames = people.stream()
-                .filter(person -> person.getGender() == 'M')
-                .map(Person::getName)
-                .collect(Collectors.joining(", "));
+        Optional<Person> opPerson = people.stream()
+                .filter(e -> e.getId() == 2)
+                .findFirst();
 
-        System.out.println("manNames : " + manNames);
+        Person found = opPerson.orElse(null);
+
+        if (found == null) {
+            System.out.println("not found");
+            return;
+        }
+
+        System.out.println("found : " + found.getName());
     }
 }
 
