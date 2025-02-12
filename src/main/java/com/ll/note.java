@@ -3,41 +3,63 @@ package com.ll;
 import java.util.*;
 
 class Solution {
-    public int solution(int k, int n, int[][] reqs) {
-        // 멘토 그룹을 유형별로 관리
-        List<Queue<Integer>> mentors = new ArrayList<>();
-        for (int i = 0; i < k; i++) {
-            mentors.add(new PriorityQueue<>());
-        }
+    public int solution(String[] board) {
+        int n = board.length;
+        int m = board[0].length();
+        int[] start = new int[2];
+        int[] goal = new int[2];
 
-        int totalWaitTime = 0;
-
-        // 요청들을 시작 시간 순으로 정렬
-        Arrays.sort(reqs, Comparator.comparingInt(a -> a[1]));
-
-        for (int[] req : reqs) {
-            int participantType = req[2] - 1; // 0-based index
-            int startTime = req[1];
-            int duration = req[0];
-
-            Queue<Integer> mentorQueue = mentors.get(participantType);
-
-            // 멘토 중에서 가장 빨리 끝나는 시간 확인 및 업데이트
-            while (!mentorQueue.isEmpty() && mentorQueue.peek() <= startTime) {
-                mentorQueue.poll();
-            }
-
-            if (mentorQueue.size() < n / k) {
-                // 멘토 여유가 있으면 즉시 상담
-                mentorQueue.offer(startTime + duration);
-            } else {
-                // 가장 빨리 끝나는 멘토를 찾아야 함
-                int earliestEnd = mentorQueue.poll();
-                totalWaitTime += earliestEnd - startTime;
-                mentorQueue.offer(earliestEnd + duration);
+        // 시작 위치와 목표 위치 찾기
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i].charAt(j) == 'R') {
+                    start[0] = i;
+                    start[1] = j;
+                } else if (board[i].charAt(j) == 'G') {
+                    goal[0] = i;
+                    goal[1] = j;
+                }
             }
         }
 
-        return totalWaitTime;
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{start[0], start[1], 0});
+        boolean[][] visited = new boolean[n][m];
+        visited[start[0]][start[1]] = true;
+
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int x = current[0];
+            int y = current[1];
+            int steps = current[2];
+
+            if (x == goal[0] && y == goal[1]) {
+                return steps;
+            }
+
+            for (int[] dir : directions) {
+                int nx = x;
+                int ny = y;
+
+                while (true) {
+                    nx += dir[0];
+                    ny += dir[1];
+
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= m || board[nx].charAt(ny) == 'D') {
+                        nx -= dir[0];
+                        ny -= dir[1];
+                        break;
+                    }
+                }
+
+                if (!visited[nx][ny]) {
+                    visited[nx][ny] = true;
+                    queue.offer(new int[]{nx, ny, steps + 1});
+                }
+            }
+        }
+
+        return -1;
     }
 }
