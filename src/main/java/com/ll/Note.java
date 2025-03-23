@@ -1,13 +1,42 @@
 package com.ll;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class note {
+public class Note {
+    private String text;
+    private String timestamp;  // 작성 시간 저장
+
+    public Note(String text) {
+        this.text = text;
+        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String newText) {
+        this.text = newText;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + timestamp + "] " + text;
+    }
+}
+
+class NoteApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<String> notes = new ArrayList<>();
+        List<Note> notes = new ArrayList<>();
 
         while (true) {
             System.out.print("입력: ");
@@ -15,8 +44,8 @@ public class note {
 
             if (input.equals("생성")) {
                 System.out.print("새로운 입력: ");
-                String newNote = scanner.nextLine();
-                notes.add(newNote);
+                String newNoteText = scanner.nextLine();
+                notes.add(new Note(newNoteText));
                 System.out.println("입력란 추가됨! 현재 개수: " + notes.size());
             } else if (input.equals("목록")) {
                 if (notes.isEmpty()) {
@@ -46,7 +75,7 @@ public class note {
                     String newText = parts[2];
 
                     if (index >= 0 && index < notes.size()) {
-                        notes.set(index, newText);
+                        notes.get(index).setText(newText);
                         System.out.println("입력이 수정되었습니다.");
                     } else {
                         System.out.println("잘못된 번호입니다.");
