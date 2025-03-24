@@ -83,6 +83,21 @@ class NoteApp {
                 } catch (Exception e) {
                     System.out.println("수정 형식: 수정 [번호] [새로운 값]");
                 }
+            } else if (input.startsWith("검색 ")) {
+                String keyword = input.substring(3).toLowerCase();
+                boolean found = false;
+
+                System.out.println("🔍 검색 결과:");
+                for (int i = 0; i < notes.size(); i++) {
+                    if (notes.get(i).getText().toLowerCase().contains(keyword)) {
+                        System.out.println((i + 1) + ". " + notes.get(i));
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    System.out.println("검색어와 일치하는 입력이 없습니다.");
+                }
             } else if (input.equals("종료")) {
                 System.out.println("프로그램을 종료합니다.");
                 break;
