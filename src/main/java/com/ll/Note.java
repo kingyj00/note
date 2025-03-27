@@ -51,8 +51,30 @@ public class Note {
                     }
                     System.out.println();
                 }
+            } else if (command.equals("삭제")) {
+                if (quotes.isEmpty()) {
+                    System.out.println("⚠️ 삭제할 명언이 없습니다.\n");
+                    continue;
+                }
+
+                System.out.println("📜 삭제할 명언 목록:");
+                for (int i = 0; i < quotes.size(); i++) {
+                    System.out.println((i + 1) + ". " + quotes.get(i));
+                }
+                System.out.print("삭제할 번호 입력: ");
+                try {
+                    int deleteIndex = Integer.parseInt(scanner.nextLine()) - 1;
+                    if (deleteIndex >= 0 && deleteIndex < quotes.size()) {
+                        quotes.remove(deleteIndex);
+                        System.out.println("✅ 명언이 삭제되었습니다!\n");
+                    } else {
+                        System.out.println("⚠️ 올바른 번호를 입력하세요!\n");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("⚠️ 숫자를 입력하세요!\n");
+                }
             } else {
-                System.out.println("⚠️ 올바른 명령을 입력하세요! (등록 / 랜덤 / 목록 / 종료)\n");
+                System.out.println("⚠️ 올바른 명령을 입력하세요! (등록 / 랜덤 / 목록 / 삭제 / 종료)\n");
             }
         }
 
