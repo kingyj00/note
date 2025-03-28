@@ -1,83 +1,28 @@
 package com.ll;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity  // JPA 엔티티 클래스임을 선언
+@Table(name = "users")  // 실제 테이블명을 'users'로 지정
 public class Note {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        List<String> quotes = new ArrayList<>();
-        quotes.add("행복은 습관이다. 그것을 몸에 지녀라. - 허버드");
-        quotes.add("성공은 실패를 거듭해도 열정을 잃지 않는 것이다. - 윈스턴 처칠");
-        quotes.add("길을 아는 것과 그 길을 걷는 것은 다르다. - 매트릭스");
-        quotes.add("포기하지 마라. 꿈꾸는 자만이 성공한다. - 익명");
-        quotes.add("기회는 일어나는 것이 아니라 만들어지는 것이다. - 크리스 그로서");
+    @Column(nullable = false)
+    private String username;
 
-        while (true) {
-            System.out.println("== 명언 앱 ==");
-            System.out.print("명령) ");
-            String command = scanner.nextLine();
+    @Column(nullable = false, unique = true)
+    private String email;
 
-            if (command.equals("종료")) {
-                System.out.println("프로그램을 종료합니다.");
-                break;
-            } else if (command.equals("등록")) {
-                System.out.print("명언 입력: ");
-                String quote = scanner.nextLine();
-                System.out.print("작가 입력: ");
-                String author = scanner.nextLine();
-
-                String newQuote = quote + " - " + author;
-                quotes.add(newQuote);
-                System.out.println("✅ 명언이 등록되었습니다!\n");
-            } else if (command.equals("랜덤")) {
-                if (quotes.isEmpty()) {
-                    System.out.println("⚠️ 저장된 명언이 없습니다.\n");
-                } else {
-                    int index = random.nextInt(quotes.size());
-                    System.out.println("💬 명언: " + quotes.get(index) + "\n");
-                }
-            } else if (command.equals("목록")) {
-                if (quotes.isEmpty()) {
-                    System.out.println("⚠️ 저장된 명언이 없습니다.\n");
-                } else {
-                    System.out.println("📜 저장된 명언 목록:");
-                    for (int i = 0; i < quotes.size(); i++) {
-                        System.out.println((i + 1) + ". " + quotes.get(i));
-                    }
-                    System.out.println();
-                }
-            } else if (command.equals("삭제")) {
-                if (quotes.isEmpty()) {
-                    System.out.println("⚠️ 삭제할 명언이 없습니다.\n");
-                    continue;
-                }
-
-                System.out.println("📜 삭제할 명언 목록:");
-                for (int i = 0; i < quotes.size(); i++) {
-                    System.out.println((i + 1) + ". " + quotes.get(i));
-                }
-                System.out.print("삭제할 번호 입력: ");
-                try {
-                    int deleteIndex = Integer.parseInt(scanner.nextLine()) - 1;
-                    if (deleteIndex >= 0 && deleteIndex < quotes.size()) {
-                        quotes.remove(deleteIndex);
-                        System.out.println("✅ 명언이 삭제되었습니다!\n");
-                    } else {
-                        System.out.println("⚠️ 올바른 번호를 입력하세요!\n");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("⚠️ 숫자를 입력하세요!\n");
-                }
-            } else {
-                System.out.println("⚠️ 올바른 명령을 입력하세요! (등록 / 랜덤 / 목록 / 삭제 / 종료)\n");
-            }
-        }
-
-        scanner.close();
-    }
+    // 기본 생성자 & getter, setter 생략
 }
+
+// @Table 어노테이션은 JPA (Java Persistence API)에서 엔티티(Entity)와 데이터베이스의 테이블을 매핑할 때 사용해!
+//👉 이 코드는 User라는 엔티티 클래스를 데이터베이스의 users 테이블과 연결하는 거야.
+//만약 @Table(name = "users")을 생략하면, 기본적으로 테이블 이름은 User가 될 거야(클래스 이름과 동일).
